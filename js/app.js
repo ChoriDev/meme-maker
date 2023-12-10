@@ -1,87 +1,49 @@
+let lineWidth = document.querySelector("#line-width");
 const canvas = document.querySelector("canvas");
-
 const ctx = canvas.getContext("2d");
-
 canvas.width = 600;
 canvas.height = 600;
+ctx.lineWidth = lineWidth.value;
 
-// // // house
-// // roof
-// ctx.moveTo(300, 50);
-// ctx.lineTo(200, 150);
-// ctx.lineTo(400, 150);
-// ctx.lineTo(300, 50);
-// ctx.strokeStyle = "red";
-// ctx.stroke();
+let isPainting = false;
 
-// // wall
-// ctx.strokeStyle = "orange";
-// ctx.strokeRect(200, 150, 200, 200);
+const colors = [
+  "#ff3838",
+  "#ffb8b8",
+  "#c56cf0",
+  "#ff9f1a",
+  "#fff200",
+  "#32ff7e",
+  "#7efff5",
+  "#18dcff",
+  "#7d5fff",
+];
 
-// // door
-// ctx.strokeStyle = "brown";
-// ctx.strokeRect(240, 350, 40, -70);
+function draw(event) {
+  if (isPainting) {
+    ctx.lineTo(event.offsetX, event.offsetY);
+    ctx.stroke();
+    return;
+  }
+  ctx.moveTo(event.offsetX, event.offsetY);
+}
 
-// // window
-// ctx.strokeRect(310, 200, 60, 60);
-// ctx.moveTo(340, 200);
-// ctx.lineTo(340, 260);
-// ctx.moveTo(310, 230);
-// ctx.lineTo(370, 230);
-// ctx.stroke();
+function startPainting(event) {
+  isPainting = true;
+}
 
-// // human
-// head
-ctx.beginPath();
-ctx.arc(300, 250, 15, 0, 2 * Math.PI);
-ctx.fillStyle = "black";
-ctx.fill();
-ctx.closePath();
+function cancelPainting(event) {
+  isPainting = false;
+  ctx.beginPath();
+}
 
-// hat
-ctx.beginPath();
-ctx.moveTo(300, 240);
-ctx.arc(300, 245, 20, 1 * Math.PI, 2 * Math.PI);
-ctx.fillStyle = "orange";
-ctx.fill();
-ctx.closePath();
+function onLineWidthChange(event) {
+  ctx.lineWidth = event.target.value;
+}
 
-// eyes
-ctx.beginPath();
-ctx.arc(295, 245, 3, 0, 2 * Math.PI);
-ctx.arc(305, 245, 3, 0, 2 * Math.PI);
-ctx.fillStyle = "green";
-ctx.fill();
-ctx.closePath();
+canvas.addEventListener("mousemove", draw);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", cancelPainting);
+canvas.addEventListener("moseleave", cancelPainting);
 
-// mouth
-ctx.beginPath();
-ctx.arc(300, 253, 8, 0, 1 * Math.PI);
-ctx.fill();
-ctx.closePath();
-
-// body
-ctx.beginPath();
-ctx.fillStyle = "black";
-ctx.fillRect(285, 270, 30, 60, 8);
-ctx.closePath();
-
-// left arm
-ctx.beginPath();
-ctx.fillRect(270, 270, 10, 50, 8);
-ctx.closePath();
-
-// right arm
-ctx.beginPath();
-ctx.fillRect(320, 270, 10, 50, 8);
-ctx.closePath();
-
-// left leg
-ctx.beginPath();
-ctx.fillRect(285, 330, 10, 50, 8);
-ctx.closePath();
-
-// right leg
-ctx.beginPath();
-ctx.fillRect(305, 330, 10, 50, 8);
-ctx.closePath();
+lineWidth.addEventListener("change", onLineWidthChange);
