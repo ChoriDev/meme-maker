@@ -9,6 +9,8 @@ const eraserBtn = document.querySelector("#eraser-btn");
 const fileInput = document.querySelector("#file");
 const textInput = document.querySelector("#text");
 const saveBtn = document.querySelector("#save");
+const fontFamily = document.querySelector("#font-family");
+const fontSize = document.querySelector("#font-size");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -92,7 +94,7 @@ function onDestroyClick() {
 function onEraserClick() {
   ctx.strokeStyle = "white";
   isFilling = false;
-  modeBtn.innerText = "Fill";
+  modeBtn.innerText = "💧Fill";
 }
 
 function onFileChange(event) {
@@ -129,7 +131,7 @@ function onSaveClick() {
 canvas.addEventListener("mousemove", draw);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
-canvas.addEventListener("moseleave", cancelPainting);
+canvas.addEventListener("mouseleave", cancelPainting);
 canvas.addEventListener("mousedown", onCanvasClick);
 canvas.addEventListener("dblclick", onDoubleClick);
 
